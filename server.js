@@ -59,7 +59,7 @@ app.post('/upload', function(req, res){
     });
 
     var obj = {};
-    obj.url = "https://www.google.com/"
+    obj.url = "https://www.google.com/";
     console.log('body: ' + JSON.stringify(req.body));
     res.status(200).send({body:req.body, url:'https://www.google.com/'});
 });
