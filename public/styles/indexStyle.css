@@ -1,0 +1,7 @@
+.form label:not(:first-of-type){
+    margin-top: 20px;
+}
+
+.form input[type="submit"]{
+    margin-top: 20px;
+}

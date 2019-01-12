@@ -1,0 +1,26 @@
+<h1>Hello from test</h1>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+
+    $.ajax({
+        url: "/upload",
+        type: "POST",
+        data: {
+            //Set an empty response to see the error
+           message : 'hello world'   
+        },
+        dataType:"text xml",
+        success: function(message, textStatus, xhr) {
+            console.log('success');
+        },
+        complete: function(xhr, textStatus) {
+            console.log(xhr.status);
+        } 
+    });
+    
+</script>
+
+

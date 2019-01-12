@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <% include ../master/head.html %>
+        <link href="styles/indexStyle.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- including header.html -->
+        <% include ../master/header.html %>
+
+        <div class="container content">
+            <div class="row">
+                <!-- for spacing -->
+                <div class="col-md-2"> </div>
+
+                <!-- webcam -->
+                <div class="col-md-8">
+                    <script src="scripts/webcamjs/webcam.js"></script>
+                    <div id="my_camera" style="width:320px; height:240px;"></div>
+                    <div id="my_result"></div>
+                    <script language="JavaScript">
+                        Webcam.attach( '#my_camera' );
+                        
+                        function take_snapshot() {
+                            Webcam.snap( function(data_uri) {
+                                console.log(data_uri);
+                                document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+                                var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
+                                var http = new XMLHttpRequest();
+                                // http.open("POST", '/upload', true);
+                                // http.setRequestHeader("Content-Type", "application/json");
+                                // http.onreadystatechange = function() { // Call a function when the state changes.
+                                //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                                //         // 
+                                //         // Request finished. Do processing here.
+                                //     }
+                                // }
+                                //http.send("img=" + raw_image_data);
+                                //http.send("img=" + data_uri);
+                                //http.send(JSOn.stringify({name:"test"}));
+
+                                $.ajax({
+                                    url: "/upload",
+                                    type: "POST",
+                                    data: {
+                                        //Set an empty response to see the error
+                                        data: data_uri
+                                    },
+                                    dataType:"json",
+                                    contentType:"application/x-www-form-urlencoded",
+                                    success: function(xml, textStatus, xhr) {
+                                        console.log(arguments);
+                                        console.log(xhr.status);
+                                        console.log('from success');
+                                    },
+                                    complete: function(xhr, textStatus) {
+                                        console.log(xhr.status);
+                                        console.log('from complete');
+                                    },
+                                    error: function(xhr, textStatus, errorThrown){
+                                        console.log(errorThrown);
+                                    }
+                                });
+
+                            } );
+                        }
+                    </script>
+                    <a href="javascript:void(take_snapshot())">Take Snapshot</a>
+                </div>
+
+                <!-- for spacing -->
+                <div class="col-md-2"></div>
+            </div>
+            
+        </div>
+        
+
+        <!-- including footer.html -->
+    </body>
+</html>
