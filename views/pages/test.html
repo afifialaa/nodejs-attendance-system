@@ -5,20 +5,20 @@
 
 <script>
 
+    var data = {};
+    data.title = "title";
+    data.message = "message";
+
     $.ajax({
-        url: "/upload",
-        type: "POST",
-        data: {
-            //Set an empty response to see the error
-           message : 'hello world'   
-        },
-        dataType:"text xml",
-        success: function(message, textStatus, xhr) {
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: 'http://localhost:8080/uploadAjax',						
+        success: function(data) {
             console.log('success');
-        },
-        complete: function(xhr, textStatus) {
-            console.log(xhr.status);
-        } 
+            console.log(JSON.stringify(data));
+            window.location = data.url;
+        }
     });
     
 </script>

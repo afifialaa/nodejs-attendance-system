@@ -54,8 +54,14 @@ app.get('/test', function(req, res){
 });
 
 app.post('/upload', function(req, res){
-    console.log('upload invoked');
-    res.json({status:"success", redirect:'https://www.google.com'});
+    req.on('data', function (chunk) {
+        console.log('GOT DATA!');
+    });
+
+    var obj = {};
+    obj.url = "https://www.google.com/"
+    console.log('body: ' + JSON.stringify(req.body));
+    res.status(200).send({body:req.body, url:'https://www.google.com/'});
 });
 
 // var img64 = req.body.img;
