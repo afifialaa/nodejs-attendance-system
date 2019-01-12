@@ -25,10 +25,6 @@ app.post('/uploadAjax', function(req, res){
     res.status(200).send({body:req.body, url:'https://www.google.com/'});
 });
 
-app.post('/upload', function(req, res){
-    
-});
-
 app.listen(8080, function(req, res){
     console.log('server is listening');
 });
