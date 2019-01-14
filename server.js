@@ -9,8 +9,12 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+//control flow module
+var step = require('step');
+
 /*** end of importing ****/
 
+//declaring middlewares
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
@@ -34,6 +38,7 @@ function save(records){
     console.log('hello from saveCallback');
 }
 
+//retrieve employee data from db
 function getEmployeeData(empID, callback){
     con.connect(function(err) {
         if (err) throw err;
@@ -45,16 +50,20 @@ function getEmployeeData(empID, callback){
     });
 }
 
+//callback function to 
 function readId(file){
     fs.readFile(file, function (err, data) {
         if (err) throw err;
         console.log('id form text file is ' + data);
+        employeeID = data;
+        console.log('employee id var is to: ' + employeeID);
     });
 }
 
+//
 function getFile(callback){
     const timeout = setInterval(function(){
-        const file = 'D:\\project\\shared\\id.txt';
+        const file = 'D:\\attendance system\\shared\\id.txt';
         const fileExists = fs.existsSync(file);
 
         console.log('Checking for: ', file);
@@ -78,30 +87,42 @@ app.get('/userPage', function(req, res){
     res.render('pages/user/userPage.html');
 })
 
+app.get('/userPage/:employeeID', function(req, res){
+    console.log('employee id recieved as a param is: ' + req.params.employeeID);
+});
+
 app.get('/test', function(req, res){
     res.render('pages/test.html');
 });
 
+//image is posted
 app.post('/upload', function(req, res){
-    req.on('data', function (chunk) {
-        console.log('GOT DATA!');
-    });
-    console.log('body: ' + JSON.stringify(req.body.content));
+    step(
+        function writeImage(){
+            console.log('body: ' + JSON.stringify(req.body.content));
 
-    //base64 recieved without meta info
-    var image64 = JSON.stringify(req.body.content);
+            //base64 recieved without meta info
+            var image64 = JSON.stringify(req.body.content);
 
-    //writing image to directory
-    var path = 'D:\\project\\shared\\test.png';
-    fs.writeFile(path, image64, {encoding:'base64'}, function(err){
-        if(err) console.log('an error occurred');
-    });
+            //writing image to directory
+            var path = 'D:\\attendance system\\shared\\test.png';
+            fs.writeFile(path, image64, {encoding:'base64'}, function(err){
+                if(err) console.log('an error occurred');
+            });
+        },
+        function
+    )
+    
 
     //wait for matlab response
     getFile(readId);
 
-    res.status(200).send({body:req.body, url:'http://localhost:8080/userPage'});
-    console.log('**************bbbbbbbbbbbbbb***********');
+    if(employeeID == 2){
+        res.status(200).send({body:req.body, url:'http://localhost:8080/userPage/' + employeeID});
+    }else{
+        res.send('sorry');
+    }
+    
 });
 
 // var img64 = req.body.img;
