@@ -30,14 +30,6 @@ var con = mysql.createConnection({
     database: "attendance_system"
 });
 
-var result = [];
-var employeeID;
-
-function save(records){
-    result = records;
-    console.log('hello from saveCallback');
-}
-
 //retrieve employee data from db
 function getEmployeeData(empID, callback){
     con.connect(function(err) {
@@ -49,33 +41,6 @@ function getEmployeeData(empID, callback){
         });
     });
 }
-
-//callback function to 
-function readId(file){
-    fs.readFile(file, function (err, data) {
-        if (err) throw err;
-        console.log('id form text file is ' + data);
-        employeeID = data;
-        console.log('employee id var is to: ' + employeeID);
-    });
-}
-
-//
-function getFile(callback){
-    const timeout = setInterval(function(){
-        const file = 'D:\\attendance system\\shared\\id.txt';
-        const fileExists = fs.existsSync(file);
-
-        console.log('Checking for: ', file);
-        console.log('Exists: ', fileExists);
-
-        if (fileExists) {
-            clearInterval(timeout);
-            callback(file);
-        }else{
-        }
-    }, 5000);
-};
 
 app.get('/', function(req, res){
     console.log('a client is connected...');
@@ -89,55 +54,66 @@ app.get('/userPage', function(req, res){
 
 app.get('/userPage/:employeeID', function(req, res){
     console.log('employee id recieved as a param is: ' + req.params.employeeID);
+    res.send('hello employee with id:' + req.params.employeeID)
 });
 
 app.get('/test', function(req, res){
     res.render('pages/test.html');
 });
 
-//image is posted
+var writeImagePromise = function(req){
+    return new Promise(function(resolve, reject){
+        console.log('body: ' + JSON.stringify(req.body.content));
+
+        //base64 recieved without meta info
+        var image64 = JSON.stringify(req.body.content);
+
+        //writing image to directory
+        var path = 'D:\\attendance system\\shared\\test.png';
+        fs.writeFile(path, image64, {encoding:'base64'}, function(err){
+            if(err) throw err;
+            console.log('written successfully');
+            resolve();
+        });
+    });
+}
+
+var checkFilePromise = function(){
+    return new Promise(function(resolve, reject){
+        const timeout = setInterval(function(){
+            const file = 'D:\\attendance system\\shared\\id.txt';
+            const fileExists = fs.existsSync(file);
+    
+            console.log('Checking for: ', file);
+            console.log('Exists: ', fileExists);
+    
+            if (fileExists) {
+                clearInterval(timeout);
+                resolve(file);
+            }else{
+                console.log('still looking...');
+            }
+        }, 5000);
+    });
+}
+
+var getFileContentPromise = function(file){
+    return new Promise(function(resolve, reject){
+        var content = fs.readFileSync(file);
+        var employeeID = content;
+        resolve(employeeID);
+    });
+}
+
 app.post('/upload', function(req, res){
-    step(
-        function writeImage(){
-            console.log('body: ' + JSON.stringify(req.body.content));
-
-            //base64 recieved without meta info
-            var image64 = JSON.stringify(req.body.content);
-
-            //writing image to directory
-            var path = 'D:\\attendance system\\shared\\test.png';
-            fs.writeFile(path, image64, {encoding:'base64'}, function(err){
-                if(err) console.log('an error occurred');
-            });
-        },
-        function
-    )
-    
-
-    //wait for matlab response
-    getFile(readId);
-
-    if(employeeID == 2){
-        res.status(200).send({body:req.body, url:'http://localhost:8080/userPage/' + employeeID});
-    }else{
-        res.send('sorry');
-    }
-    
+    writeImagePromise(req).then(function(){
+        return checkFilePromise();
+    }).then(function(result){
+        return getFileContentPromise(result);
+    }).then(function(result){
+        res.status(200).send({body:req.body, url:'http://localhost:8080/userPage/' + result});
+    })
 });
-
-// var img64 = req.body.img;
-    // console.log(img64);
-
-    // var empID = 1;
-    // req.session.employeeID = empID;
-    // console.log('session is set for employee: ' + req.session.employeeID);
-
-    // getEmployeeData(req.session.employeeID, function(records){
-    //     result = records;
-    //     req.session.email = result[0].email;
-    //     console.log('from getEmployeeData, session email is:' + req.session.email);
-    // });
-
 
 
 app.listen(8080, function(){
