@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="styles\sidebarStyle.css">
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css'>
+
+<nav id="sidebar" class="sidebar">
+    
+    <ul>
+        <li><a href="#"> search </a></li>
+        <li><a href="#"> modify </a></li>
+        <li><a href="#"> approve </a></li>
+        <li><a href="#"> reports </a></li>
+    </ul> 
+    <i id="icon" class='fas fa-align-justify'></i>
+</nav>
+
+<script>
+    function print(){
+        console.log('print function');
+    }
+
+    var icon = document.getElementById('icon');
+    var sidebar = document.getElementById('sidebar');
+
+    icon.addEventListener('click', function(){
+        sidebar.classList.toggle('active');
+    }, false);
+</script>

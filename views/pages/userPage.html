@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <% include ../master/head.html %>
+</head>
+<body>
+    <!-- including header.html -->
+    <% include ../master/header.html %>
+
+    <div class="content container">
+        <lable>employee id: </lable>
+        <%- data.employee_id %>
+
+        <br>
+
+        <lable>Name: </lable>
+        <%- data.name %>
+
+        <br>
+
+        <lable>email: </lable>
+        <%- data.email%>
+
+        <br>
+
+        <lable>department id: </lable>
+        <%- data.department_id %>
+        
+    </div>
+
+</body>
+</html>

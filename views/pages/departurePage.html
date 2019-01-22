@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>Departure</title>
         <% include ../master/head.html %>
         <link href="styles/indexStyle.css" rel="stylesheet">
         <script src="scripts/webcamjs/webcam.js"></script>
@@ -58,7 +58,7 @@
                                     type: 'POST',
                                     data: JSON.stringify(data),
                                     contentType: 'application/json',
-                                    url: 'http://localhost:8080/upload',						
+                                    url: 'http://localhost:8080/departure',						
                                     success: function(data) {
                                         console.log('success');
                                         console.log(JSON.stringify(data));

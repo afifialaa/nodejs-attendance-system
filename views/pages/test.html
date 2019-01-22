@@ -1,26 +1,35 @@
-<h1>Hello from test</h1>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script>
-
-    var data = {};
-    data.title = "title";
-    data.message = "message";
-
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        url: 'http://localhost:8080/uploadAjax',						
-        success: function(data) {
-            console.log('success');
-            console.log(JSON.stringify(data));
-            window.location = data.url;
-        }
-    });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="styles/headerStyle.css">
+</head>
+<body>
+    <!-- including header.html -->
+    <header class="header container-fluid">
+            <div class="container">
+                <div class="row">
+        
+                    <!-- logo -->
+                    <div class="logo col-md-3">
+                        <h1><a href="pages/index.html">LOGO</a></h1>
+                    </div>
+        
+                    <!-- navigation -->
+                    <nav class="index-nav col-md-9">
+                        <ul>
+                            <li><a href="#">  </a></li>
+                            <li><a href="#">  </a></li>
+                        </ul>
+                    </nav>
+        
+                    
+                </div>
+            </div>
+        </header>
     
-</script>
-
-
+</body>
+</html>

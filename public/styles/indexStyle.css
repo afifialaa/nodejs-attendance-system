@@ -5,3 +5,31 @@
 .form input[type="submit"]{
     margin-top: 20px;
 }
+
+.captureBtn{
+    background-color: #58CC5C;
+    color: white;
+    font-size: 20px;
+    border: 0px;
+}
+
+.confirmBtn{
+    background-color: #58CC5C;
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    visibility: hidden;
+}
+
+.recaptureBtn{
+    background-color: #C13846;
+    color: white;
+    font-size: 20px;
+    border: 0px;
+    float: right;
+    margin-top: 10px;
+    visibility: hidden;
+    position: relative;
+    left: -20px;
+}

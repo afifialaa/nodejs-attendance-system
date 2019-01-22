@@ -1,37 +1,19 @@
 ﻿.header{
     height: 80px;
-    background-color: #c1c1c1;
+    background-color: #36373D;
 }
 
 .logo a{
-    color: black;
+    color: white;
     text-decoration: none;
     float: left;
 }
 
-.index-nav{
+.title{
     float: right;
+    color: white;
 }
 
-.index-nav ul{
+.title h2{
     float: right;
-    margin-top: 26px;
-}
-
-.index-nav ul li{
-    display: inline;
-}
-
-.index-nav ul li a{
-    color: black;
-    text-transform: capitalize;
-    font-weight: 600;
-}
-
-.index-nav ul li:not(:last-child){
-    margin-right: 20px;
-}
-
-.index-nav ul li a:hover{
-    text-decoration: none;
 }

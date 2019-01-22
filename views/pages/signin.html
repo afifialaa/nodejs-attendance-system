@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <% include ../master/head.html %>
+    <link rel="stylesheet" href="styles\signinStyle.css">
+    
+</head>
+<body>
+    <!-- including header.html -->
+    <% include ../master/header.html %>
+        
+    <% include ../master/sidebar.html %>
+
+    <div class="container content">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                    <form name="signin" method="POST" action="/signin" onsubmit="return validateForm()">
+                        <label for="employeeID">ID: </label>
+                        <input type="text" id="employeeID" name="employeeID" class="form-control">
+                            
+                        <br>
+                    
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control">
+                    
+                        <br>
+                    
+                        <input type="submit" value="signin">
+                    </form>
+                    <script src="scripts/formValidator.js"></script>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+    
+    
+</body>
+</html>
