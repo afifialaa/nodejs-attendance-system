@@ -1,4 +1,4 @@
 /node_modules
 /shared
-rat.js
-test.js
+/rat.js
+/test.js
